@@ -17,4 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('dashboard');
+
+Route::get('/u/{url}', function (App\Url $url) {
+    return $url->redirect();
+})->name('url.redirect');
+
+Route::get('/u', 'URLController@showCreateForm')->name('url.form');
+
+Route::post('/u', 'URLController@submitForm');
