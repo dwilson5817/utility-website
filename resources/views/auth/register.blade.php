@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-group">
                             <label for="password">Confirm password</label>
-                            <input type="password" class="form-control" id="password-confirm" name="password-confirm" placeholder="Confirm password" required>
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm password" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Register</button>
                         <a type="button" class="btn btn-link" href="{{ route('login') }}">Already have an account?</a>
