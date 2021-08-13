@@ -8,20 +8,20 @@
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('index')">
                                     <BreezeApplicationLogo class="block h-9 w-auto" />
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <BreezeNavLink v-if="$page.props.auth.user" :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </BreezeNavLink>
                             </div>
                         </div>
 
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
+                        <div v-if="$page.props.auth.user" class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
                                 <BreezeDropdown align="right" width="48">
@@ -39,10 +39,23 @@
 
                                     <template #content>
                                         <BreezeDropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
+                                            Logout
                                         </BreezeDropdownLink>
                                     </template>
                                 </BreezeDropdown>
+                            </div>
+                        </div>
+
+                        <div v-else class="flex">
+                            <!-- Authentication Links -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <BreezeNavLink :href="route('login')" :active="route().current('login')">
+                                    Login
+                                </BreezeNavLink>
+
+                                <BreezeNavLink :href="route('register')" :active="route().current('register')">
+                                    Register
+                                </BreezeNavLink>
                             </div>
                         </div>
 
@@ -61,21 +74,33 @@
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <BreezeResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <BreezeResponsiveNavLink v-if="$page.props.auth.user" :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </BreezeResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200">
+                    <div v-if="$page.props.auth.user" class="pt-4 pb-3 border-t border-gray-200">
                         <div class="px-4">
                             <div class="font-medium text-base text-gray-800">{{ $page.props.auth.user.name }}</div>
                             <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <BreezeResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
+                            <BreezeResponsiveNavLink :href="route('logout')" class="w-full text-left" method="post" as="button">
+                                Logout
+                            </BreezeResponsiveNavLink>
+                        </div>
+                    </div>
+
+                    <div v-else class="pt-1 pb-3 border-t border-gray-200">
+                        <div class="mt-3 space-y-1">
+                            <BreezeResponsiveNavLink :href="route('login')" :active="route().current('login')">
+                                Login
+                            </BreezeResponsiveNavLink>
+
+                            <BreezeResponsiveNavLink :href="route('register')" :active="route().current('register')">
+                                Register
                             </BreezeResponsiveNavLink>
                         </div>
                     </div>
@@ -90,9 +115,17 @@
             </header>
 
             <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
+            <div class="py-6">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 bg-white border-b border-gray-200">
+                            <main>
+                                <slot />
+                            </main>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>

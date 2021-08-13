@@ -4,11 +4,11 @@
     <BreezeLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
+                Welcome
             </h2>
         </template>
 
-        <p>You're logged in!</p>
+        <p>A link shortening and image hosting site.</p>
     </BreezeLayout>
 </template>
 
