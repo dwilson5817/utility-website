@@ -126,6 +126,18 @@
                     </div>
                 </div>
             </div>
+
+            <hr>
+
+            <div class="py-6">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 bg-white border-b border-gray-200">
+                            <p class="text-sm">Copyright &copy; Dylan Wilson 2021.  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.  Source code is available on <a href="https://gitlab.dylanwilson.dev/dylan/utility-website" class="text-gray-600 hover:text-gray-900">my GitLab</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
