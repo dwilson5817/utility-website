@@ -23,4 +23,10 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::prefix('u')->group(function () {
+    Route::get('/new', function () {
+        return Inertia::render('ShortenURL');
+    })->name('url.shorten');
+});
+
 require __DIR__.'/auth.php';

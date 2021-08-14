@@ -18,6 +18,10 @@
                                 <BreezeNavLink v-if="$page.props.auth.user" :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </BreezeNavLink>
+
+                                <BreezeNavLink :href="route('url.shorten')" :active="route().current('url.shorten')">
+                                    Shorten URL
+                                </BreezeNavLink>
                             </div>
                         </div>
 
