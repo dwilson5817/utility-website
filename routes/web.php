@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ShortenUrlController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,6 +28,9 @@ Route::prefix('u')->group(function () {
     Route::get('/new', function () {
         return Inertia::render('ShortenURL');
     })->name('url.shorten');
+
+    Route::post('/new', [ShortenUrlController::class, 'store'])
+        ->name('url.submit');
 });
 
 require __DIR__.'/auth.php';
