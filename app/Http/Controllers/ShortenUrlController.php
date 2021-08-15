@@ -13,6 +13,18 @@ use Inertia\Response;
 class ShortenUrlController extends Controller
 {
     /**
+     * Display the URL shortener view.
+     *
+     * @return Response
+     */
+    public function create(): Response
+    {
+        return Inertia::render('ShortenUrl', [
+            'short_url' => session('short_url'),
+        ]);
+    }
+
+    /**
      * Handle a visit to the short URL.
      *
      * @param Url $url

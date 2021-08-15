@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ShortenUrlController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -30,6 +29,9 @@ Route::prefix('u')->group(function () {
 
     Route::post('/', [ShortenUrlController::class, 'store'])
         ->name('url.submit');
+
+    Route::get('/{url}', [ShortenUrlController::class, 'handle'])
+        ->name('url.redirect');
 });
 
 require __DIR__.'/auth.php';
