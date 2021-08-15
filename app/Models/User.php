@@ -40,4 +40,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the URLs this user has shortened.
+     */
+    public function urls()
+    {
+        return $this->hasMany(Url::class);
+    }
 }

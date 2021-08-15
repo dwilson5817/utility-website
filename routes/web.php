@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\ShortenUrlController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -22,5 +22,16 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::prefix('u')->group(function () {
+    Route::get('/', [ShortenUrlController::class, 'create'])
+        ->name('url.shorten');
+
+    Route::post('/', [ShortenUrlController::class, 'store'])
+        ->name('url.submit');
+
+    Route::get('/{url}', [ShortenUrlController::class, 'handle'])
+        ->name('url.redirect');
+});
 
 require __DIR__.'/auth.php';
