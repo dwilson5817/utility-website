@@ -10,14 +10,14 @@
 
         <BreezeValidationErrors class="mb-4" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
+        <div v-if="short_url" class="font-medium text-green-600">
+            <p>Your short URL is {{ short_url }}</p>
         </div>
 
-        <form @submit.prevent="submit">
+        <form v-else @submit.prevent="submit">
             <div>
-                <BreezeLabel for="url" value="Long URL" />
-                <BreezeInput id="url" type="url" class="mt-1 block w-full" v-model="form.url" required autofocus autocomplete="url" />
+                <BreezeLabel for="full_url" value="Long URL" />
+                <BreezeInput id="full_url" type="url" class="mt-1 block w-full" v-model="form.full_url" required autofocus autocomplete="url" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
@@ -39,7 +39,7 @@ import BreezeValidationErrors from "@/Components/ValidationErrors";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 
 export default {
-    name: "ShortenURL",
+    name: "ShortenUrl",
 
     components: {
         BreezeButton,
@@ -53,13 +53,13 @@ export default {
     },
 
     props: {
-        status: String,
+        short_url: String,
     },
 
     data() {
         return {
             form: this.$inertia.form({
-                url: null
+                full_url: null
             })
         }
     },
@@ -71,7 +71,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -25,11 +25,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::prefix('u')->group(function () {
-    Route::get('/new', function () {
-        return Inertia::render('ShortenURL');
-    })->name('url.shorten');
+    Route::get('/', [ShortenUrlController::class, 'create'])
+        ->name('url.shorten');
 
-    Route::post('/new', [ShortenUrlController::class, 'store'])
+    Route::post('/', [ShortenUrlController::class, 'store'])
         ->name('url.submit');
 });
 
