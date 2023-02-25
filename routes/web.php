@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ShortenUrlController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,22 +16,20 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Index');
-})->name('index');
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::prefix('u')->group(function () {
-    Route::get('/', [ShortenUrlController::class, 'create'])
-        ->name('url.shorten');
-
-    Route::post('/', [ShortenUrlController::class, 'store'])
-        ->name('url.submit');
-
-    Route::get('/{url}', [ShortenUrlController::class, 'handle'])
-        ->name('url.redirect');
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 });
 
-require __DIR__.'/auth.php';
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+});
