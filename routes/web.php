@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ShortenUrlController;
+use App\Http\Controllers\ShortenURLController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,22 +17,32 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Index');
-})->name('index');
+    return Inertia::render('Welcome', [
+        'appName' => config('app.name'),
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->name('welcome');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-Route::prefix('u')->group(function () {
-    Route::get('/', [ShortenUrlController::class, 'create'])
-        ->name('url.shorten');
+    Route::get('/u', function () {
+        return Inertia::render('ShortenURL');
+    })->name('url.new');
 
-    Route::post('/', [ShortenUrlController::class, 'store'])
+    Route::post('/u', [ShortenUrlController::class, 'store'])
         ->name('url.submit');
-
-    Route::get('/{url}', [ShortenUrlController::class, 'handle'])
-        ->name('url.redirect');
 });
 
-require __DIR__.'/auth.php';
+Route::get('/u/{url}', [ShortenUrlController::class, 'handle'])
+    ->name('url.redirect');
+

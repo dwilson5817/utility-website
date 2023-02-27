@@ -1,11 +1,31 @@
+<script setup>
+import { Head, useForm } from '@inertiajs/vue3';
+import AuthenticationCard from '@/Components/AuthenticationCard.vue';
+import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import TextInput from '@/Components/TextInput.vue';
+
+defineProps({
+    status: String,
+});
+
+const form = useForm({
+    email: '',
+});
+
+const submit = () => {
+    form.post(route('password.email'));
+};
+</script>
+
 <template>
     <Head title="Forgot Password" />
 
-    <BreezeLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Forgot Password
-            </h2>
+    <AuthenticationCard>
+        <template #logo>
+            <AuthenticationCardLogo />
         </template>
 
         <div class="mb-4 text-sm text-gray-600">
@@ -16,57 +36,26 @@
             {{ status }}
         </div>
 
-        <BreezeValidationErrors class="mb-4" />
-
         <form @submit.prevent="submit">
             <div>
-                <BreezeLabel for="email" value="Email" />
-                <BreezeInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
+                <InputLabel for="email" value="Email" />
+                <TextInput
+                    id="email"
+                    v-model="form.email"
+                    type="email"
+                    class="mt-1 block w-full"
+                    required
+                    autofocus
+                    autocomplete="username"
+                />
+                <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <BreezeButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Email Password Reset Link
-                </BreezeButton>
+                </PrimaryButton>
             </div>
         </form>
-    </BreezeLayout>
+    </AuthenticationCard>
 </template>
-
-<script>
-import BreezeButton from '@/Components/Button.vue'
-import BreezeInput from '@/Components/Input.vue'
-import BreezeLabel from '@/Components/Label.vue'
-import BreezeLayout from '@/Layouts/Breeze.vue'
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
-import { Head } from '@inertiajs/inertia-vue3';
-
-export default {
-    components: {
-        BreezeButton,
-        BreezeInput,
-        BreezeLabel,
-        BreezeLayout,
-        BreezeValidationErrors,
-        Head,
-    },
-
-    props: {
-        status: String,
-    },
-
-    data() {
-        return {
-            form: this.$inertia.form({
-                email: ''
-            })
-        }
-    },
-
-    methods: {
-        submit() {
-            this.form.post(this.route('password.email'))
-        }
-    }
-}
-</script>

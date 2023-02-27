@@ -10,6 +10,11 @@ class Url extends Model
 {
     use HasFactory;
 
+    /**
+     * Instead of using the ID of the URL, we will use the slug to identify it in routes.
+     *
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'slug';
@@ -20,7 +25,7 @@ class Url extends Model
      *
      * @return string
      */
-    public static function generateSlug()
+    public static function generateSlug(): string
     {
         // Create the slug variable to store the slug to
         $slug = null;
