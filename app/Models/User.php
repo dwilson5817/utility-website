@@ -58,4 +58,12 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Get the URLs this user has shortened.
+     */
+    public function urls()
+    {
+        return $this->hasMany(Url::class);
+    }
 }

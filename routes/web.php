@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ShortenURLController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,12 +18,13 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
+        'appName' => config('app.name'),
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('welcome');
 
 Route::middleware([
     'auth:sanctum',
@@ -32,4 +34,15 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::get('/u', function () {
+        return Inertia::render('ShortenURL');
+    })->name('url.new');
+
+    Route::post('/u', [ShortenUrlController::class, 'store'])
+        ->name('url.submit');
 });
+
+Route::get('/u/{url}', [ShortenUrlController::class, 'handle'])
+    ->name('url.redirect');
+
