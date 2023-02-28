@@ -4,7 +4,7 @@ import { onMounted } from 'vue'
 import { Tooltip, initTooltips } from 'flowbite'
 
 const props = defineProps({
-    short_url: String,
+    image: String,
     message: String,
     tooltip: Tooltip,
 })
@@ -25,7 +25,7 @@ onMounted(() => {
 
 async function copy() {
     try {
-        await navigator.clipboard.writeText(props.short_url);
+        await navigator.clipboard.writeText(this.short_url);
         props.message = 'Copied!';
     } catch($e) {
         props.message = 'Failed to copy!';
@@ -39,7 +39,7 @@ async function copy() {
     <AppLayout title="Success">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Shorten URL
+                Upload Image
             </h2>
         </template>
 
@@ -53,16 +53,16 @@ async function copy() {
                             </svg>
                         </div>
                         <div class="w-full">
-                            <p class="mb-3 font-bold">Your URL has been shortened!</p>
+                            <p class="mb-3 font-bold">Your image has been uploaded!</p>
                             <form @submit.prevent="copy">
-                                <label for="url" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Short URL</label>
+                                <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
                                         </svg>
                                     </div>
-                                    <input :value="short_url" type="url" id="url" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search">
+                                    <input :value="image" type="search" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" disabled>
                                     <button @mouseleave="props.tooltip.hide()" id="copy-button" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         Copy
                                     </button>
