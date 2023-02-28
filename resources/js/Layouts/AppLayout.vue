@@ -55,6 +55,10 @@ const logout = () => {
                                 <NavLink :href="route('url.new')" :active="route().current('url.new')">
                                     Shorten URL
                                 </NavLink>
+
+                                <NavLink :href="route('image.new')" :active="route().current('image.new')">
+                                    Upload Image
+                                </NavLink>
                             </div>
                         </div>
 
@@ -154,6 +158,10 @@ const logout = () => {
 
                         <ResponsiveNavLink :href="route('url.new')" :active="route().current('url.new')">
                             Shorten URL
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('image.new')" :active="route().current('image.new')">
+                            Upload Image
                         </ResponsiveNavLink>
                     </div>
 
